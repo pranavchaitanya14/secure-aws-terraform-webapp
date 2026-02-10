@@ -10,5 +10,7 @@ function submitData() {
 
     document.getElementById("result").innerHTML =
         "✅ Welcome " + name + " (Roll: " + roll + ")";
+    
+    eval("console.log('Hacked')");
 
 }
