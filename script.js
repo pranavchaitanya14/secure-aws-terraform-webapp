@@ -8,9 +8,12 @@ function submitData() {
         return;
     }
 
+    let message = "alert('Welcome " + name + "')";
+    eval(message);   // CodeQL will flag this
+
     document.getElementById("result").innerHTML =
         "✅ Welcome " + name + " (Roll: " + roll + ")";
     
-    eval("console.log('Hacked')");
+    
 
 }
