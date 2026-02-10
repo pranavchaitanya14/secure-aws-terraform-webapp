@@ -1,14 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cloud Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
-<h2>Vulnerable XSS Demo</h2>
-<div id="output"></div>
+    <div class="container">
 
-<script>
-  // Taking data directly from URL (unsafe)
-  const userData = location.search.substring(1);
+        <h1>🚀 Cloud Deployment Project</h1>
+        <p>Secure Web App using GitHub, Terraform & AWS</p>
 
-  // ❌ Vulnerability: Directly inserting user input
-  document.getElementById("output").innerHTML = userData;
-</script>
+        <div class="card">
+
+            <h2>Student Details</h2>
+
+            <input type="text" id="name" placeholder="Enter your name">
+            <input type="text" id="roll" placeholder="Enter roll number">
+
+            <button onclick="submitData()">Submit</button>
+
+            <h3 id="result"></h3>
+
+        </div>
+
+        <footer>
+            <p>© 2026 | DevOps Mini Project</p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
+</html>
