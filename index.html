@@ -1,10 +1,14 @@
 <body>
 
+<h2>Vulnerable XSS Demo</h2>
 <div id="output"></div>
 
 <script>
-  const data = location.hash.substring(1);
-  document.getElementById("output").innerHTML = data;
+  // Taking data directly from URL (unsafe)
+  const userData = location.search.substring(1);
+
+  // ❌ Vulnerability: Directly inserting user input
+  document.getElementById("output").innerHTML = userData;
 </script>
 
 </body>
