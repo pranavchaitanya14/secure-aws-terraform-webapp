@@ -19,14 +19,17 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          request_pty: true
           script: |
             sudo apt update
-            sudo apt install apache2 -y
+            sudo apt install apache2 git -y
+
+            cd /home/${{ secrets.EC2_USER }}
+
+            rm -rf app
+            git clone https://github.com/pranavchaitanya14/secure-aws-terraform-webapp.git app
 
             sudo rm -rf /var/www/html/*
-            sudo cp index.html /var/www/html/
-            sudo cp style.css /var/www/html/
-            sudo cp script.js /var/www/html/
+            sudo cp app/webapp/* /var/www/html/
 
             sudo systemctl restart apache2
+
