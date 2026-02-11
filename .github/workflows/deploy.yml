@@ -13,27 +13,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare SSH key
-        run: |
-          echo "${{ secrets.EC2_KEY }}" | base64 -d > key.pem
-          chmod 600 key.pem
-
       - name: Deploy application to EC2
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key_path: key.pem
+          key: ${{ secrets.EC2_KEY }}
+          request_pty: true
           script: |
             sudo apt update
-            sudo apt install apache2 git -y
-
-            cd /home/ubuntu
-
-            rm -rf app
-            git clone https://github.com/pranavchaitanya14/secure-aws-terraform-webapp.git app
+            sudo apt install apache2 -y
 
             sudo rm -rf /var/www/html/*
-            sudo cp app/webapp/* /var/www/html/
+            sudo cp index.html /var/www/html/
+            sudo cp style.css /var/www/html/
+            sudo cp script.js /var/www/html/
 
             sudo systemctl restart apache2
