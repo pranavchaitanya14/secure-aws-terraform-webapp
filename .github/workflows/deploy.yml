@@ -13,7 +13,7 @@
       sudo apt update
       sudo apt install apache2 git -y
 
-      cd /home/${{ secrets.EC2_USER }}
+      cd /home/ubuntu
 
       rm -rf app
       git clone https://github.com/pranavchaitanya14/secure-aws-terraform-webapp.git app
