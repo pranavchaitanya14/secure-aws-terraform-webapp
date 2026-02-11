@@ -1,24 +1,39 @@
-- name: Prepare SSH key
-  run: |
-    echo "${{ secrets.EC2_KEY }}" | base64 -d > key.pem
-    chmod 600 key.pem
+name: Deploy to EC2
 
-- name: Deploy application to EC2
-  uses: appleboy/ssh-action@v1
-  with:
-    host: ${{ secrets.EC2_HOST }}
-    username: ${{ secrets.EC2_USER }}
-    key_path: key.pem
-    script: |
-      sudo apt update
-      sudo apt install apache2 git -y
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
-      cd /home/ubuntu
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-      rm -rf app
-      git clone https://github.com/pranavchaitanya14/secure-aws-terraform-webapp.git app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      sudo rm -rf /var/www/html/*
-      sudo cp app/webapp/* /var/www/html/
+      - name: Prepare SSH key
+        run: |
+          echo "${{ secrets.EC2_KEY }}" | base64 -d > key.pem
+          chmod 600 key.pem
 
-      sudo systemctl restart apache2
+      - name: Deploy application to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key_path: key.pem
+          script: |
+            sudo apt update
+            sudo apt install apache2 git -y
+
+            cd /home/ubuntu
+
+            rm -rf app
+            git clone https://github.com/pranavchaitanya14/secure-aws-terraform-webapp.git app
+
+            sudo rm -rf /var/www/html/*
+            sudo cp app/webapp/* /var/www/html/
+
+            sudo systemctl restart apache2
